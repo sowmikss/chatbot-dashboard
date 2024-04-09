@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Modal styles */
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+          background-color: #fefefe;
+          margin: 15% auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 600px;
+          border-radius: 8px;
+        }
+
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
+
+        /* Form styles */
+        .modal-content form input[type="text"],
+        .modal-content form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+
+        .modal-content form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .modal-content form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .forgot-password {
+            color: #3498db;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+   <div class="sidebar">
+    <div class="top">
+        <div class="logo">
+            <i class="bx bxl-codepen"></i>
+            <span>Chatbot</span>
+        </div>
+        <i class="bx bx-menu" id="btn"></i> <!-- Icon is visible here -->
+    </div>
+    <div class="user">
+     <div>
+        <p class="bold"></p>
+        <p>Admin</p>
+     </div>
+    </div>
+    <ul>
+        <li>
+            <a href="#">
+                <i class="bx bxs-file-pdf"></i>
+                <span class="nav-item">PDF Manager</span>
+            </a>
+            <span class="tooltip">PDF Manager</span>
+        </li>
+        <li>
+            <a href="#" id="userLink">
+                <i class="bx bx-body"></i>
+                <span class="nav-item">User Management</span>
+            </a>
+            <span class="tooltip">User Management</span>
+        </li>
+        <li>
+            <a href="#" id="chatLink">
+                <i class="bx bx-chat"></i>
+                <span class="nav-item">Chat Management</span>
+            </a>
+            <span class="tooltip">Chat Management</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class="bx bx-cog"></i>
+                <span class="nav-item">Settings</span>
+            </a>
+            <span class="tooltip">Settings</span>
+        </li>
+    </ul>
+   </div>
+   <div class="main-content">
+    <div class="container">
+        <h1>Dashboard</h1>
+    </div>
+   </div>
+   <!-- User Management Modal -->
+   <div id="userModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>User Management</h2>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Your name.." required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Your password.." required>
+
+        <input type="submit" value="Create User">
+      </form>
+      <p class="forgot-password">Forgot your password?</p>
+    </div>
+  </div>
+
+  <!-- Chat Management Modal -->
+  <div id="chatModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Chat Management</h2>
+      <form>
+        <label for="chatName">Chat Name:</label>
+        <input type="text" id="chatName" name="chatName" placeholder="Chat name.." required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" placeholder="Description.." required></textarea>
+
+        <input type="submit" value="Create Chat">
+      </form>
+      <p class="forgot-password">Forgot your password?</p>
+      <w
+    </div>
+  </div>
+
+<script>
+    let btn = document.querySelector('#btn');
+    let sidebar = document.querySelector('.sidebar');
+    let userLink = document.getElementById('userLink');
+    let chatLink = document.getElementById('chatLink');
+    let userModal = document.getElementById("userModal");
+    let chatModal = document.getElementById("chatModal");
+    let userSpan = document.getElementsByClassName("close")[0];
+    let chatSpan = document.getElementsByClassName("close")[1];
+
+    btn.onclick = function() {
+        sidebar.classList.toggle('active');
+    };
+
+    // When the user clicks on the "User Management" link, open the user modal
+    userLink.onclick = function() {
+      userModal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x) in user modal, close the user modal
+    userSpan.onclick = function() {
+      userModal.style.display = "none";
+    }
+
+    // When the user clicks on the "Chat Management" link, open the chat modal
+    chatLink.onclick = function() {
+      chatModal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x) in chat modal, close the chat modal
+    chatSpan.onclick = function() {
+      chatModal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == userModal) {
+        userModal.style.display = "none";
+      }
+      if (event.target == chatModal) {
+        chatModal.style.display = "none";
+      }
+    }
+</script>
+</body>
+</html>
