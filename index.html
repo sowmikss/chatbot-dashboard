@@ -6,9 +6,6 @@
     <title>Chatbot</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Your existing CSS styles */
-    </style>
 </head>
 <body>
    <div class="sidebar">
@@ -59,6 +56,27 @@
    <div class="main-content">
     <div class="container" id="pdfContent" style="display:none;"> <!-- Add content sections -->
         <h1>PDF Manager Content</h1>
+        <div>
+          <button class="add-user-btn" onclick="openAddPDFModal()">Add User</button>
+          
+          <table id="user-table">
+                 <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Username</th>
+                      <th>Role</th>
+                      <th>Unit</th>
+                      <th>Bureau</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <!-- No rows initially -->
+              </tbody>
+          </table>
+      </div>
     </div>
     <div class="container" id="userContent" style="display:none;">
         <h1>User Management Console</h1>
@@ -86,18 +104,151 @@
     </div>
     <div class="container" id="chatContent" style="display:none;">
         <h1>Chat Management Content</h1>
+        <div>
+            <button class="add-user-btn" onclick="openChatAddUserModal()">Add User</button>
+            
+            <table id="chat-user-table">
+                   <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Unit</th>
+                        <th>Bureau</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- No rows initially -->
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="container" id="settingsContent" style="display:none;">
         <h1>Settings Content</h1>
     </div>
    </div>
 
-   <!-- Add User Modal -->
-   <div id="addUserModal" class="modal">
+   <!-- Add User Modal for PDF Management -->
+<div id="addPDFModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('addPDFModal')">&times;</span>
+    <h2>Add User</h2>
+      <form id="addUserForm" onsubmit="return addPDF()">
+        <div class="input-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="input-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+        <div class="input-group">
+            <label for="employeeId">Employee ID:</label>
+            <input type="text" id="employeeId" name="employeeId" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="input-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="">Select Role</option>
+                <option value="Admin">Admin</option>
+                <!-- Add other roles as options -->
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="unit">Unit:</label>
+            <select id="unit" name="unit" required>
+                <option value="">Select Unit</option>
+                <option value="">S</option>
+
+                <!-- Add units as options -->
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="bureau">Bureau:</label>
+            <select id="bureau" name="bureau" required>
+                <option value="">Select Bureau</option>
+                <option value="">Bureau</option>
+
+                <!-- Add bureaus as options -->
+            </select>
+        </div>
+        <input type="submit" value="Add User">
+      </form>
+    </div>
+  </div>
+
+   <!-- Add User Modal for User Management -->
+<div id="addUserModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('addUserModal')">&times;</span>
       <h2>Add User</h2>
       <form id="addUserForm" onsubmit="return addUser()">
+        <div class="input-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="input-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+        <div class="input-group">
+            <label for="employeeId">Employee ID:</label>
+            <input type="text" id="employeeId" name="employeeId" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="input-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="">Select Role</option>
+                <option value="Admin">Admin</option>
+                <!-- Add other roles as options -->
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="unit">Unit:</label>
+            <select id="unit" name="unit" required>
+                <option value="">Select Unit</option>
+                <option value="">S</option>
+                <!-- Add units as options -->
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="bureau">Bureau:</label>
+            <select id="bureau" name="bureau" required>
+                <option value="">Select Bureau</option>
+                <option value="">Bureau</option>
+                <!-- Add bureaus as options -->
+            </select>
+        </div>
+        <input type="submit" value="Add User">
+      </form>
+    </div>
+  </div>
+
+  <!-- Add User Modal for Chat Management -->
+  <div id="chatAddUserModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('chatAddUserModal')">&times;</span>
+      <h2>Add User</h2>
+      <form id="addUserForm" onsubmit="return chatAddUser()">
         <div class="input-group">
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" required>
@@ -167,10 +318,20 @@
         // Show the selected content section
         document.getElementById(contentId + 'Content').style.display = 'block';
     }
+    
+    // Function to open the add user modal for PDF Management
+    function openAddPDFModal() {
+        document.getElementById("addPDFModal").style.display = "block";
+    }
 
-    // Function to open the add user modal
+    // Function to open the add user modal for User Management
     function openAddUserModal() {
         document.getElementById("addUserModal").style.display = "block";
+    }
+
+    // Function to open the add user modal for Chat Management
+    function openChatAddUserModal() {
+        document.getElementById("chatAddUserModal").style.display = "block";
     }
 
     // Function to close modal
@@ -178,44 +339,122 @@
         document.getElementById(modalId).style.display = "none";
     }
 
-    // Function to add user
+    // Function to add user for PDF Management
+    function addPDFUser(event) {
+        event.preventDefault(); // Prevent form submission
+
+        console.log("Add user function called for PDF Management");
+
+        // Get form data
+        let firstName = document.getElementById("pdfFirstName").value;
+        let lastName = document.getElementById("pdfLastName").value;
+        let employeeId = document.getElementById("pdfEmployeeId").value;
+        let password = document.getElementById("pdfPassword").value;
+        let username = document.getElementById("pdfUsername").value;
+        let role = document.getElementById("pdfRole").value;
+        let unit = document.getElementById("pdfUnit").value;
+        let bureau = document.getElementById("pdfBureau").value;
+
+        console.log(firstName, lastName, employeeId, password, username, role, unit, bureau);
+
+        // Perform any validation if needed
+
+        // Add user to table
+        var table = document.getElementById("user-table").getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow();
+        newRow.innerHTML = `<td>${employeeId}</td>
+                            <td>${firstName} ${lastName}</td>
+                            <td>${username}</td>
+                            <td>${role}</td>
+                            <td>${unit}</td>
+                            <td>${bureau}</td>
+                            <td>Active</td>
+                            <td>Edit/Delete</td>`;
+
+        // Close modal
+        closeModal("addPDFModal");
+
+        // Return false to prevent form submission
+        return false;
+    }
+
+    // Function to add user for User Management
     function addUser(event) {
-    event.preventDefault(); // Prevent form submission
+        event.preventDefault(); // Prevent form submission
 
-    console.log("Add user function called");
+        console.log("Add user function called for User Management");
 
-    // Get form data
-    let firstName = document.getElementById("firstName").value;
-    let lastName = document.getElementById("lastName").value;
-    let employeeId = document.getElementById("employeeId").value;
-    let password = document.getElementById("password").value;
-    let username = document.getElementById("username").value;
-    let role = document.getElementById("role").value;
-    let unit = document.getElementById("unit").value;
-    let bureau = document.getElementById("bureau").value;
+        // Get form data
+        let firstName = document.getElementById("firstName").value;
+        let lastName = document.getElementById("lastName").value;
+        let employeeId = document.getElementById("employeeId").value;
+        let password = document.getElementById("password").value;
+        let username = document.getElementById("username").value;
+        let role = document.getElementById("role").value;
+        let unit = document.getElementById("unit").value;
+        let bureau = document.getElementById("bureau").value;
 
-    console.log(firstName, lastName, employeeId, password, username, role, unit, bureau);
+        console.log(firstName, lastName, employeeId, password, username, role, unit, bureau);
 
-    // Perform any validation if needed
+        // Perform any validation if needed
 
-    // Add user to table
-    var table = document.getElementById("user-table").getElementsByTagName('tbody')[0];
-    var newRow = table.insertRow();
-    newRow.innerHTML = `<td>${employeeId}</td>
-                        <td>${firstName} ${lastName}</td>
-                        <td>${username}</td>
-                        <td>${role}</td>
-                        <td>${unit}</td>
-                        <td>${bureau}</td>
-                        <td>Active</td>
-                        <td>Edit/Delete</td>`;
+        // Add user to table
+        var table = document.getElementById("user-table").getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow();
+        newRow.innerHTML = `<td>${employeeId}</td>
+                            <td>${firstName} ${lastName}</td>
+                            <td>${username}</td>
+                            <td>${role}</td>
+                            <td>${unit}</td>
+                            <td>${bureau}</td>
+                            <td>Active</td>
+                            <td>Edit/Delete</td>`;
 
-    // Close modal
-    closeModal("addUserModal");
+        // Close modal
+        closeModal("addUserModal");
 
-    // Return false to prevent form submission
-    return false;
-}
+        // Return false to prevent form submission
+        return false;
+    }
+
+    // Function to add user for Chat Management
+    function addChatUser(event) {
+        event.preventDefault(); // Prevent form submission
+
+        console.log("Add user function called for Chat Management");
+
+        // Get form data
+        let firstName = document.getElementById("chatFirstName").value;
+        let lastName = document.getElementById("chatLastName").value;
+        let employeeId = document.getElementById("chatEmployeeId").value;
+        let password = document.getElementById("chatPassword").value;
+        let username = document.getElementById("chatUsername").value;
+        let role = document.getElementById("chatRole").value;
+        let unit = document.getElementById("chatUnit").value;
+        let bureau = document.getElementById("chatBureau").value;
+
+        console.log(firstName, lastName, employeeId, password, username, role, unit, bureau);
+
+        // Perform any validation if needed
+
+        // Add user to table
+        var table = document.getElementById("chat-user-table").getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow();
+        newRow.innerHTML = `<td>${employeeId}</td>
+                            <td>${firstName} ${lastName}</td>
+                            <td>${username}</td>
+                            <td>${role}</td>
+                            <td>${unit}</td>
+                            <td>${bureau}</td>
+                            <td>Active</td>
+                            <td>Edit/Delete</td>`;
+
+        // Close modal
+        closeModal("chatAddUserModal");
+
+        // Return false to prevent form submission
+        return false;
+    }
 </script>
 </body>
 </html>
