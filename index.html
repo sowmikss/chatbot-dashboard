@@ -7,97 +7,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 8px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Form styles */
-        .modal-content form label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .modal-content form input[type="text"],
-        .modal-content form input[type="password"],
-        .modal-content form select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .modal-content form .input-group {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .modal-content form .input-group > * {
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .modal-content form .input-group > *:last-child {
-            margin-right: 0;
-        }
-
-        .modal-content form input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .modal-content form input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        /* Style for the forgot password link */
-        .forgot-password {
-            color: #3498db;
-            cursor: pointer;
-            text-decoration: underline;
-            margin-top: 10px;
-            display: inline-block; /* Ensure it's displayed inline */
-        }
+        /* Your existing CSS styles */
     </style>
 </head>
 <body>
@@ -117,28 +27,28 @@
     </div>
     <ul>
         <li>
-            <a href="#">
+            <a href="#" onclick="showContent('pdf')"> <!-- Add onclick handler -->
                 <i class="bx bxs-file-pdf"></i>
                 <span class="nav-item">PDF Manager</span>
             </a>
             <span class="tooltip">PDF Manager</span>
         </li>
         <li>
-            <a href="#" id="userLink">
+            <a href="#" onclick="showContent('user')"> <!-- Add onclick handler -->
                 <i class="bx bx-body"></i>
                 <span class="nav-item">User Management</span>
             </a>
             <span class="tooltip">User Management</span>
         </li>
         <li>
-            <a href="#" id="chatLink">
+            <a href="#" onclick="showContent('chat')"> <!-- Add onclick handler -->
                 <i class="bx bx-chat"></i>
                 <span class="nav-item">Chat Management</span>
             </a>
             <span class="tooltip">Chat Management</span>
         </li>
         <li>
-            <a href="#">
+            <a href="#" onclick="showContent('settings')"> <!-- Add onclick handler -->
                 <i class="bx bx-cog"></i>
                 <span class="nav-item">Settings</span>
             </a>
@@ -147,17 +57,47 @@
     </ul>
    </div>
    <div class="main-content">
-    <div class="container">
-        <h1>Dashboard</h1>
+    <div class="container" id="pdfContent" style="display:none;"> <!-- Add content sections -->
+        <h1>PDF Manager Content</h1>
+    </div>
+    <div class="container" id="userContent" style="display:none;">
+        <h1>User Management Console</h1>
+        <div>
+            <button class="add-user-btn" onclick="openAddUserModal()">Add User</button>
+            
+            <table id="user-table">
+                   <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Unit</th>
+                        <th>Bureau</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- No rows initially -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container" id="chatContent" style="display:none;">
+        <h1>Chat Management Content</h1>
+    </div>
+    <div class="container" id="settingsContent" style="display:none;">
+        <h1>Settings Content</h1>
     </div>
    </div>
-   <!-- User Management Modal -->
-   <div id="userModal" class="modal">
+
+   <!-- Add User Modal -->
+   <div id="addUserModal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal('userModal')">&times;</span>
-      <h2>User Management</h2>
-      <br>
-      <form id="userForm">
+      <span class="close" onclick="closeModal('addUserModal')">&times;</span>
+      <h2>Add User</h2>
+      <form id="addUserForm" onsubmit="return addUser()">
         <div class="input-group">
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" required>
@@ -190,6 +130,8 @@
             <label for="unit">Unit:</label>
             <select id="unit" name="unit" required>
                 <option value="">Select Unit</option>
+                <option value="">S</option>
+
                 <!-- Add units as options -->
             </select>
         </div>
@@ -197,77 +139,38 @@
             <label for="bureau">Bureau:</label>
             <select id="bureau" name="bureau" required>
                 <option value="">Select Bureau</option>
+                <option value="">Bureau</option>
+
                 <!-- Add bureaus as options -->
             </select>
         </div>
-        <input type="submit" value="Update User">
+        <input type="submit" value="Add User">
       </form>
-      <a href="#" class="forgot-password" onclick="forgotPassword()">Forgot your password?</a>
-    </div>
-  </div>
-
-  <!-- Chat Management Modal -->
-  <div id="chatModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('chatModal')">&times;</span>
-      <h2>Chat Management</h2>
-      <form id="chatForm">
-        <div class="input-group">
-            <label for="chatName">Chat Name:</label>
-            <input type="text" id="chatName" name="chatName" required>
-        </div>
-        <div class="input-group">
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
-        </div>
-        <input type="submit" value="Create Chat">
-      </form>
-      <a href="#" class="forgot-password" onclick="forgotPassword()">Forgot your password?</a>
     </div>
   </div>
 
 <script>
     let btn = document.querySelector('#btn');
     let sidebar = document.querySelector('.sidebar');
-    let userLink = document.getElementById('userLink');
-    let chatLink = document.getElementById('chatLink');
-    let userModal = document.getElementById("userModal");
-    let chatModal = document.getElementById("chatModal");
-    let userSpan = document.getElementsByClassName("close")[0];
-    let chatSpan = document.getElementsByClassName("close")[1];
 
     btn.onclick = function() {
         sidebar.classList.toggle('active');
     };
 
-    // When the user clicks on the "User Management" link, open the user modal
-    userLink.onclick = function() {
-      userModal.style.display = "block";
+    // Function to show/hide content based on the clicked navbar option
+    function showContent(contentId) {
+        // Hide all content sections
+        document.querySelectorAll('.container').forEach(function(el) {
+            el.style.display = 'none';
+        });
+        
+        // Show the selected content section
+        document.getElementById(contentId + 'Content').style.display = 'block';
     }
 
-    // When the user clicks on <span> (x) in user modal, close the user modal
-    userSpan.onclick = function() {
-      userModal.style.display = "none";
-    }
-
-    // When the user clicks on the "Chat Management" link, open the chat modal
-    chatLink.onclick = function() {
-      chatModal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x) in chat modal, close the chat modal
-    chatSpan.onclick = function() {
-      chatModal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == userModal) {
-        userModal.style.display = "none";
-      }
-      if (event.target == chatModal) {
-        chatModal.style.display = "none";
-      }
+    // Function to open the add user modal
+    function openAddUserModal() {
+        document.getElementById("addUserModal").style.display = "block";
     }
 
     // Function to close modal
@@ -275,13 +178,44 @@
         document.getElementById(modalId).style.display = "none";
     }
 
-    // Function to handle forgot password action
-    function forgotPassword() {
-        // Add your code to handle forgot password action here
-        // For example, redirecting to a forgot password page
-        // window.location.href = "forgot-password.html";
-        alert("Forgot password clicked!");
-    }
+    // Function to add user
+    function addUser(event) {
+    event.preventDefault(); // Prevent form submission
+
+    console.log("Add user function called");
+
+    // Get form data
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let employeeId = document.getElementById("employeeId").value;
+    let password = document.getElementById("password").value;
+    let username = document.getElementById("username").value;
+    let role = document.getElementById("role").value;
+    let unit = document.getElementById("unit").value;
+    let bureau = document.getElementById("bureau").value;
+
+    console.log(firstName, lastName, employeeId, password, username, role, unit, bureau);
+
+    // Perform any validation if needed
+
+    // Add user to table
+    var table = document.getElementById("user-table").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow();
+    newRow.innerHTML = `<td>${employeeId}</td>
+                        <td>${firstName} ${lastName}</td>
+                        <td>${username}</td>
+                        <td>${role}</td>
+                        <td>${unit}</td>
+                        <td>${bureau}</td>
+                        <td>Active</td>
+                        <td>Edit/Delete</td>`;
+
+    // Close modal
+    closeModal("addUserModal");
+
+    // Return false to prevent form submission
+    return false;
+}
 </script>
 </body>
 </html>
